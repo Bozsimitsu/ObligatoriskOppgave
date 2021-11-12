@@ -70,10 +70,10 @@
         }
 
         function newEmotes(upgradeCost) {
+            if (cheater = true) return;
             if (coins < upgradeCost) return;
             coins -= upgradeCost;
             upgradeBought = true;
-            if (cheater = true) return;
             updateView();
         }
 
