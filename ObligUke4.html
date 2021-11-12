@@ -80,6 +80,7 @@
         function surprise(upgradeCost) {
             if (coins < upgradeCost) return;
             coins -= upgradeCost;
+            coinsPerClick = -1;
             coinsPerClick--;
             updateView();
         }
