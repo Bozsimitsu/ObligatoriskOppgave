@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Clicker emojis</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        //Model
+        var coins = 0;
+        var coinsPerClick = 1;
+        var emoteIndex = 0;
+        var upgradeBought = false;
+        var cheater = false;
+
+        //View
+        updateView();
+        function updateView() {
+            var emote = getEmote(emoteIndex);
+            document.getElementById('app').innerHTML = `
+            <div id="emote" onclick="doClick()">${emote}</div> 
+            <div id="coinsAmount">${coins}💰</div>
+            <button onClick="buyUpgrade(10)">Upgrade! (10 Coins)</button> 
+            <button id='oneTime(this)' onClick="newEmotes(100)">Upgrade emojis! (100 coins one time)</button>
+            <button onClick="surprise(300)">Surpise!(Not recommended 300 coins)</button> 
+            <button onClick="cheaterCoins(0)">Gimme points NOW!(Cheat points)</button> `;
+            
+        }
+        function getEmote(aEmoteIndex) {
+            if (upgradeBought) {
+                if(aEmoteIndex == 0) return '😊';
+                if(aEmoteIndex == 1) return '😀';
+                if(aEmoteIndex == 2) return '😆';
+            } 
+            if (cheater) {
+                if(aEmoteIndex == 0) return '😡CHEATER!';
+                if(aEmoteIndex == 1) return '😡BOOOO!';
+                if(aEmoteIndex == 2) return '😡NOT COOL!';
+            } else {
+                if(aEmoteIndex == 0) return '😶';
+                if(aEmoteIndex == 1) return '😐';
+                if(aEmoteIndex == 2) return '🙂';
+            }
+            
+        }
+
+
+        function updateEmoteIndex(aEmoteIndex) {
+            const maxEmoteIndex = 2;
+            aEmoteIndex++;
+            if (aEmoteIndex > maxEmoteIndex) {
+                aEmoteIndex = 0;
+            }
+            return aEmoteIndex;
+        }
+
+        //Controller
+        function doClick() {
+            coins += coinsPerClick;
+            emoteIndex = updateEmoteIndex(emoteIndex);
+            updateView();
+        }
+
+        function buyUpgrade(upgradeCost) {
+            if (coins < upgradeCost) return;
+            coins -= upgradeCost;
+            coinsPerClick++;
+            updateView();
+        }
+
+        function newEmotes(upgradeCost) {
+            if (coins < upgradeCost) return;
+            coins -= upgradeCost;
+            upgradeBought = true;
+            if (cheater = true) return;
+            updateView();
+        }
+
+        function surprise(upgradeCost) {
+            if (coins < upgradeCost) return;
+            coins -= upgradeCost;
+            coinsPerClick--;
+            updateView();
+        }
+
+        function cheaterCoins(upgradeCost) {
+            coins += 10000;
+            upgradeBought = false;
+            cheater = true;
+            updateView();
+        }
+
+        
+    </script>
+</body>
+    <style>
+        div {
+            font-size: 300%;
+        }
+        html {
+            background-color: gray;
+        }
+    </style>
+</html>
